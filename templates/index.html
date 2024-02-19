@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Diary</title>
+    <style>
+        .hidden { display: none; }
+        .entry { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #ccc; }
+    </style>
+</head>
+<body>
+    <h1>Diary</h1>
+    <button onclick="showForm('create')">Create</button>
+    <button onclick="fetchAndDisplayEntries()">Read</button>
+    <button onclick="showForm('update')">Update</button>
+    <button onclick="showForm('delete')">Delete</button>
+    
+
+    <div id="create" class="hidden">
+        <input type="text" id="createTitle" placeholder="Title" required>
+        <textarea id="createContent" placeholder="Content" required></textarea>
+        <button onclick="submitEntry()">Add Entry</button>
+    </div>
+
+    <div id="entries"></div>
+
+    <div id="update" class="hidden">
+        <input type="text" id="updateOriginalTitle" placeholder="Original Title" required>
+        <input type="text" id="updateTitle" placeholder="New Title" required>
+        <textarea id="updateContent" placeholder="New Content" required></textarea>
+        <button onclick="updateEntry()">Update Entry</button>
+    </div>
+
+    <div id="delete" class="hidden">
+        <input type="text" id="deleteTitle" placeholder="Title" required>
+        <button onclick="deleteEntry()">Delete Entry</button>
+    </div>
+
+    <script>
+        function toggleForm(formId) {
+            const form = document.getElementById(formId);
+            if (form.classList.contains('hidden')) {
+                form.classList.remove('hidden');
+            } else {
+                form.classList.add('hidden');
+            }
+        }
+        function showForm(formId) {
+        const forms = ['create', 'update', 'delete']; // List all form IDs
+        forms.forEach((id) => {
+            const form = document.getElementById(id);
+            if (id === formId) {
+                if (form.classList.contains('hidden')) {
+                    form.classList.remove('hidden');
+                } else {
+                    form.classList.add('hidden');
+                }
+            } else {
+                form.classList.add('hidden');
+            }
+            });
+        }
+
+        function submitEntry() {
+            const title = document.getElementById('createTitle').value;
+            const content = document.getElementById('createContent').value;
+            fetch('/entries', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ title, content }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    alert('Entry added!');
+                    toggleForm('create');
+                }
+            });
+        }
+
+        function fetchAndDisplayEntries() {
+            // Hide all forms when displaying entries
+            const forms = ['create', 'update', 'delete'];
+            forms.forEach((id) => {
+                const form = document.getElementById(id);
+                form.classList.add('hidden');
+            });
+
+            fetch('/entries')
+            .then(response => response.json())
+            .then(entries => {
+                const entriesDiv = document.getElementById('entries');
+                entriesDiv.innerHTML = '';
+                entries.forEach(entry => {
+                    const entryDiv = document.createElement('div');
+                    entryDiv.classList.add('entry');
+                    entryDiv.innerHTML = `<h2>${entry.title}</h2><p>${entry.content}</p><p>${entry.date}</p>`;
+                    entriesDiv.appendChild(entryDiv);
+                });
+            });
+        }
+
+        function updateEntry() {
+            const originalTitle = document.getElementById('updateOriginalTitle').value;
+            const title = document.getElementById('updateTitle').value;
+            const content = document.getElementById('updateContent').value;
+            fetch('/entries', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ originalTitle, title, content }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    alert('Entry updated!');
+                    toggleForm('update');
+                }
+            });
+        }
+
+        function deleteEntry() {
+            const title = document.getElementById('deleteTitle').value;
+            fetch('/entries', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ title }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    alert('Entry deleted!');
+                    toggleForm('delete');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
