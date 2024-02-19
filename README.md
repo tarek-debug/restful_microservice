@@ -18,17 +18,18 @@ This project provides a web application backend, implementing a RESTful API with
 ### Installation
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/tarek-debug/restful_microservice.git
+   cd restful_microservice
    ```
 2. Build the Docker image:
    ```bash
-   docker build -t <your-image-name> .
+   docker build -t restful_microservice .
    ```
 
 ### Running the Application
 1. Run the Docker container:
    ```bash
-   docker run -d -p 5000:5000 <your-image-name>
+   docker run -d -p 5000:5000 restful_microservice
    ```
 2. Access the API at `http://localhost:5000`.
 
