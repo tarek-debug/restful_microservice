@@ -34,10 +34,11 @@ This project provides a web application backend, implementing a RESTful API with
 2. Access the API at `http://localhost:5000`.
 
 ## API Usage
-- **Create a Diary Entry**: `POST /diary`
-- **Read Diary Entries**: `GET /diary`
-- **Update a Diary Entry**: `PUT /diary/<id>`
-- **Delete a Diary Entry**: `DELETE /diary/<id>`
+- `GET /diary/`: List all diary entries.
+- `POST /diary/`: Create a new diary entry. Requires a JSON payload with `title` and `content`.
+- `GET /diary/<title>`: Retrieve a specific diary entry by title.
+- `PUT /diary/<title>`: Update an existing diary entry by title. Requires a JSON payload with updated `title` and/or `content`.
+- `DELETE /diary/<title>`: Delete a diary entry by title.
 
 
 ## Contributors
