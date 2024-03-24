@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-restful-service
+  labels:
+    app: my-restful-service
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: my-restful-service
+  template:
+    metadata:
+      labels:
+        app: my-restful-service
+    spec:
+      containers:
+      - name: my-restful-service
+        image: tarek111778/restful_microservice:v0.0.1
+        ports:
+        - containerPort: 5010
+        env:
+        - name: FLASK_APP
+          value: app.py
+        - name: FLASK_RUN_HOST
+          value: "0.0.0.0"
