@@ -1,7 +1,3 @@
-Here's how you can update your README to include the Kubernetes deployment instructions:
-
-\---
-
 \# Project Title
 
 \## Overview
@@ -100,6 +96,3 @@ The application is configured to run on Kubernetes with the following specificat
 
 - Tarek Solamy (Alsolame)
 
-\---
-
-This updated README includes instructions for deploying the application using Kubernetes, alongside the original Docker deployment instructions.
