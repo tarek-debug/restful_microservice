@@ -32,10 +32,12 @@ cd restful\_microservice
 ```
 
 1. Build the Docker image:
-
+Replace [docker account] with your docker account username
 ```bash
 
-docker build -t restful\_microservice .
+docker build -t restful_microservice:v0.0.1 .
+docker tag restful_microservice:v0.0.1 [docker account]/restful_microservice:v0.0.1
+docker push [docker account]/restful_microservice:v0.0.1
 
 ```
 
@@ -47,7 +49,7 @@ docker build -t restful\_microservice .
 
 ```bash
 
-docker run -d -p 5000:5000 restful\_microservice
+docker run -d -p 5000:5000 restful_microservice:v0.0.1
 
 ```
 
@@ -59,9 +61,7 @@ docker run -d -p 5000:5000 restful\_microservice
 
 ```bash
 
-kubectl apply -f deployment.yaml
-
-kubectl apply -f service.yaml
+kubectl apply -f deployment.yaml, service.yaml, configmap.yaml
 
 ```
 
