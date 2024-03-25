@@ -65,16 +65,21 @@ kubectl apply -f deployment.yaml, service.yaml, configmap.yaml
 
 ```
 
-1. Find the external IP of the service:
+1. get text of the Service, Pods, Deployments, and ConfigMap applied on Kubernetes.:
 
 ```bash
 
-kubectl get services
+kubectl get services,deployments,pods,configmaps
 
 ```
+2 . curl commands for config and fib:
 
-Note: It might take a few minutes for the external IP to be available.
+```bash
 
+curl http://localhost:5000/fib?length=18
+curl http://localhost:5000/config
+
+```
 1. Access the API at `http://<external-ip>:82`.
 
 ## API Usage
