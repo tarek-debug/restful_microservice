@@ -3,9 +3,10 @@ kind: Service
 metadata:
   name: my-restful-service
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
-  - port: 82
-    targetPort: 5010
+  - port: 80
+    targetPort: 5000
+    nodePort: 31234
   selector:
     app: my-restful-service

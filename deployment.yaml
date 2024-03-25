@@ -16,11 +16,14 @@ spec:
     spec:
       containers:
       - name: my-restful-service
-        image: tarek111778/restful_microservice:v0.0.1
+        image: restful_microservice:v0.0.1
         ports:
-        - containerPort: 5010
+        - containerPort: 5000
         env:
         - name: FLASK_APP
           value: app.py
         - name: FLASK_RUN_HOST
           value: "0.0.0.0"
+        envFrom:
+        - configMapRef:
+            name: my-microservice-config

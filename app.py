@@ -2,6 +2,13 @@ from flask import Flask
 from flask_restx import Api, Resource, fields, reqparse, abort
 import json
 import os
+import logging
+from flask import jsonify
+from flask import request
+import traceback
+
+# Initialize logging
+logging.basicConfig(level=logging.INFO)
 
 # Initialize Flask and Flask-RESTX
 app = Flask(__name__)
@@ -94,6 +101,42 @@ class Diary(Resource):
                 save_entries(entries)
                 return entry
         abort(404, "Diary entry not found")
+    # Function to get and log environment variables
+def get_and_log_env_variables():
+    env_vars = {key: value for key, value in os.environ.items()}
+    env_vars_json = json.dumps(env_vars, indent=4)
+    logging.info(env_vars_json)  # Log to console using logging
+    return env_vars
+
+# New RESTful route "/config"
+@api.route('/config')  # This attaches the route directly to the main api object
+class Config(Resource):
+    def get(self):
+        """Get and return environment variables"""
+        return jsonify(get_and_log_env_variables())
+
+def fibonacci(n):
+    sequence = [0, 1]
+    for _ in range(2, n):
+        sequence.append(sequence[-1] + sequence[-2])
+    return sequence[:n]
+# New route for Fibonacci sequence
+@api.route('/fib')
+class Fibonacci(Resource):
+    def get(self):
+        try:
+            logging.info("Fetching length parameter...")
+            length = request.args.get('length', default=10, type=int)
+            logging.info(f"Generating Fibonacci sequence of length: {length}")
+            sequence = fibonacci(length)
+            return jsonify(sequence)
+        except Exception as e:
+            logging.error(f"An error occurred: {e}")
+            traceback.print_exc()  # This will log the full traceback
+            abort(500, str(e))
+
+
+
 
 if __name__ == '__main__':
     app.run(debug=True)
