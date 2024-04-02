@@ -94,8 +94,8 @@ curl http://localhost:5000/config
 
 The application is configured to run on Kubernetes with the following specifications:
 
-- **Deployment (`deployment.yaml`)**: Creates a deployment with 3 replicas of the application, ensuring high availability. The application image is `tarek111778/restful\_microservice:v0.0.1`, listening on port 5010.
-- **Service (`service.yaml`)**: Exposes the application outside the Kubernetes cluster using a LoadBalancer service on port 82, targeting port 5010 on the application containers.
+- **Deployment (`deployment.yaml`)**: Creates a deployment with 3 replicas of the application, ensuring high availability. The application image is `tarek111778/restful\_microservice:v0.0.1`, listening on port 5000.
+- **Service (`service.yaml`)**: Exposes the application outside the Kubernetes cluster using a LoadBalancer service on port 82, targeting port 5000 on the application containers.
 
 ## Contributors
 
