@@ -97,6 +97,9 @@ The application is configured to run on Kubernetes with the following specificat
 - **Deployment (`deployment.yaml`)**: Creates a deployment with 3 replicas of the application, ensuring high availability. The application image is `tarek111778/restful\_microservice:v0.0.1`, listening on port 5000.
 - **Service (`service.yaml`)**: Exposes the application outside the Kubernetes cluster using a LoadBalancer service on port 82, targeting port 5000 on the application containers.
 
+## Last updates
+I also added workflow
+
 ## Contributors
 
 - Tarek Solamy (Alsolame)
