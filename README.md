@@ -65,16 +65,21 @@ kubectl apply -f deployment.yaml, service.yaml, configmap.yaml
 
 ```
 
-1. Find the external IP of the service:
+1. get text of the Service, Pods, Deployments, and ConfigMap applied on Kubernetes.:
 
 ```bash
 
-kubectl get services
+kubectl get services,deployments,pods,configmaps
 
 ```
+2 . curl commands for config and fib:
 
-Note: It might take a few minutes for the external IP to be available.
+```bash
 
+curl http://localhost:5000/fib?length=18
+curl http://localhost:5000/config
+
+```
 1. Access the API at `http://<external-ip>:82`.
 
 ## API Usage
@@ -89,8 +94,8 @@ Note: It might take a few minutes for the external IP to be available.
 
 The application is configured to run on Kubernetes with the following specifications:
 
-- **Deployment (`deployment.yaml`)**: Creates a deployment with 3 replicas of the application, ensuring high availability. The application image is `tarek111778/restful\_microservice:v0.0.1`, listening on port 5010.
-- **Service (`service.yaml`)**: Exposes the application outside the Kubernetes cluster using a LoadBalancer service on port 82, targeting port 5010 on the application containers.
+- **Deployment (`deployment.yaml`)**: Creates a deployment with 3 replicas of the application, ensuring high availability. The application image is `tarek111778/restful\_microservice:v0.0.1`, listening on port 5000.
+- **Service (`service.yaml`)**: Exposes the application outside the Kubernetes cluster using a LoadBalancer service on port 82, targeting port 5000 on the application containers.
 
 ## Contributors
 
